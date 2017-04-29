@@ -1,5 +1,12 @@
 let roleBuilder = {
 
+    /**  
+     * run - Base builder role function
+     * if creep has energy it will attempt to build structures
+     * else if will attempt to gather energy
+     *
+     * @param  {Creep} creep http://docs.screeps.com/api/#Creep
+     */
     run: function(creep) {
 
         // {bool} building is a state in creep memory
