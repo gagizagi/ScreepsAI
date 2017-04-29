@@ -1,12 +1,16 @@
 module.exports = function(grunt) {
-    var env = process.env
+
+    // Get username & password from env variables
+    var username = process.env.screeps_email
+    var password = process.env.screeps_password
+
     grunt.loadNpmTasks('grunt-screeps')
 
     grunt.initConfig({
         screeps: {
             options: {
-                email: env.screeps_email,
-                password: env.screeps_password,
+                email: username,
+                password: password,
                 branch: 'default',
                 ptr: false
             },
