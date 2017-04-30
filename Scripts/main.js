@@ -17,7 +17,7 @@ module.exports.loop = function () {
         // This creep
         let creep = Game.creeps[name]
 
-        // Run function for this crap based on its role
+        // Run function for this creep based on its role
         switch(creep.memory.role) {
         case 'worker':
             roleWorker.run(creep)
