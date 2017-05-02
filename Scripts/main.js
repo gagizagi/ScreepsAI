@@ -2,13 +2,14 @@ let roleHarvester = require('role.harvester')
 let roleUpgrader = require('role.upgrader')
 let roleBuilder = require('role.builder')
 let roleWorker = require('role.worker')
-let spawner = require('spawner')
+let spawner = require('util.spawner')
+let gc = require('util.garbage')
 
-module.exports.loop = function () {
+module.exports.loop = () => {
     let getCreeps = {
-        worker: 3,
+        worker: 5,
         harvester: 0,
-        upgrader: 0,
+        upgrader: 1,
         builder: 0
     }
     spawner.run(getCreeps)
@@ -33,4 +34,6 @@ module.exports.loop = function () {
             break
         }
     }
+
+    gc.run()
 }
