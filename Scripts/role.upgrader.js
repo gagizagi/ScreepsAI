@@ -1,17 +1,17 @@
-let roleUpgrader = {
+let Upgrader = require('class.upgrader')
 
-    /**
-     * run - Base upgrader role function
-     * if creep has energy it will attempt to upgrade the controller
-     * else it will attempt to gather energy
-     *
-     * @param  {Creep} creep http://docs.screeps.com/api/#Creep
-     */
+let roleUpgrader = {
+    
     run: function(creep) {
-        if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-            // If not in range of controller, move to it
-            creep.moveTo(creep.room.controller /* TODO add color */)
-        }
+        let upgrader = new Upgrader(creep)
+
+        if(!upgrader.working && upgrader.fullEnergy)
+            upgrader.working = creep.memory.work = true
+        if(upgrader.working && upgrader.needEnergy)
+            upgrader.working = creep.memory.work = false
+
+        if(!upgrader.working) upgrader.harvestEnergy()
+        else upgrader.work()
     }
 }
 

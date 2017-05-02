@@ -1,30 +1,19 @@
-let roleHarvester = require('role.harvester')
-let roleUpgrader = require('role.upgrader')
+let Worker = require('class.worker')
 
 let roleWorker = {
 
-    run: function(creep) {
-        if(creep.memory.refill && creep.carry.energy == creep.carryCapacity)
-            creep.memory.refill = false
-        if(!creep.memory.refill && creep.carry.energy == 0)
-            creep.memory.refill = true
+    run: (creep) => {
+        let worker = new Worker(creep)
 
-        if(creep.memory.refill) workerRefill(creep)
-        else workerWork(creep)
+        if(!worker.working && worker.fullEnergy)
+            worker.working = creep.memory.work = true
+        if(worker.working && worker.needEnergy)
+            worker.working = creep.memory.work = false
+
+        if(!worker.working) worker.harvestEnergy()
+        else worker.work()
     }
 
 }
 
 module.exports = roleWorker
-
-let workerWork = creep => {
-    debugger
-    roleHarvester.run(creep, STRUCTURE_SPAWN)
-    roleUpgrader.run(creep)
-}
-
-let workerRefill = creep => {
-    let sources = creep.room.find(FIND_SOURCES)
-    if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE)
-        creep.moveTo(sources[0])
-}
