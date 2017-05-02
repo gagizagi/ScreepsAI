@@ -6,12 +6,21 @@ let spawner = require('util.spawner')
 let gc = require('util.garbage')
 
 module.exports.loop = () => {
+    /**
+     * Object with number of creep roles you want to maintain via spawner module
+     * Key: worker role
+     * Value: number of workers of role
+     * @type {Object}
+     * TODO rework this into something nicer
+     */
     let getCreeps = {
         worker: 5,
         harvester: 0,
         upgrader: 1,
         builder: 0
     }
+
+    // Run spawner module to automatically replenish creeps
     spawner.run(getCreeps)
     // Loop over all Creeps
     for(let name in Game.creeps) {
@@ -35,5 +44,6 @@ module.exports.loop = () => {
         }
     }
 
+    /* Garbage collector to avoid memory leaks */
     gc.run()
 }
